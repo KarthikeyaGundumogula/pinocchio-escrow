@@ -26,7 +26,13 @@ pub fn process_instruction(
     match EscrowInstrctions::try_from(descriminator)? {
         EscrowInstrctions::Make => instructions::make::process_make_instruction(accounts, data)?,
         EscrowInstrctions::Take => instructions::take::process_take_instruction(accounts, data)?,
-        EscrowInstrctions::Refund => instructions::refund::process_refund_instruction(accounts, data)?
+        EscrowInstrctions::Refund => {
+            instructions::refund::process_refund_instruction(accounts, data)?
+        }
+        EscrowInstrctions::MakeV2 => {
+            instructions::wincode_v2::make::process_make_v2_instruction(accounts, data)?
+        }
+        _ => Err(ProgramError::InvalidInstructionData)?,
     };
     Ok(())
 }

@@ -5,15 +5,34 @@ pub use setup::*;
 use solana_sdk::message::{AccountMeta, Instruction};
 use solana_sdk::signer::Signer;
 
-pub fn make_instruction(ctx: &mut TestContext) {
+pub fn make_instruction(ctx: &mut TestContext, v2: bool) {
     let amount_to_receive: u64 = 100_000_000;
     let amount_to_give: u64 = 500_000_000;
+    let amount_to_receive_bytes: [u8; 64] = {
+        let mut arr = [0u8; 64];
+        arr[..8].copy_from_slice(&amount_to_receive.to_le_bytes());
+        arr
+    };
+
+    let amount_to_give_bytes: [u8; 64] = {
+        let mut arr = [0u8; 64];
+        arr[..8].copy_from_slice(&amount_to_give.to_le_bytes());
+        arr
+    };
 
     let make_data = [
-        vec![0u8], // Make discriminator
+        if v2 { vec![3u8] } else { vec![0u8] }, // Make discriminator
         ctx.escrow_bump.to_le_bytes().to_vec(),
-        amount_to_receive.to_le_bytes().to_vec(),
-        amount_to_give.to_le_bytes().to_vec(),
+        if v2 {
+            amount_to_receive_bytes.to_vec()
+        } else {
+            amount_to_receive.to_le_bytes().to_vec()
+        },
+        if v2 {
+            amount_to_give_bytes.to_vec()
+        } else {
+            amount_to_give.to_le_bytes().to_vec()
+        },
     ]
     .concat();
 
@@ -97,20 +116,20 @@ mod tests {
     #[test]
     pub fn test_make_instruction() {
         let mut ctx = setup();
-        make_instruction(&mut ctx);
+        make_instruction(&mut ctx,false);
     }
 
     #[test]
     pub fn test_take_instruction() {
         let mut ctx = setup();
-        make_instruction(&mut ctx);
+        make_instruction(&mut ctx,true);
         take_instruction(&mut ctx);
     }
 
     #[test]
     pub fn test_refund_instruction() {
         let mut ctx = setup();
-        make_instruction(&mut ctx);
+        make_instruction(&mut ctx,true);
         refund_instruction(&mut ctx);
     }
 }
