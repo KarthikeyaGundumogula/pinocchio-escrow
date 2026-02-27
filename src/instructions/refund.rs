@@ -15,6 +15,10 @@ pub fn process_refund_instruction(accounts: &[AccountView], _data: &[u8]) -> Pro
         return Err(ProgramError::NotEnoughAccountKeys);
     };
 
+    if !maker.is_signer() {
+        return Err(ProgramError::IncorrectAuthority);
+    }
+
     let (amount_to_refund, bump) = {
         let escrow_state = Escrow::from_account_info(escrow_acc)?;
         let maker_ata_state = pinocchio_token::state::TokenAccount::from_account_view(maker_ata)?;
