@@ -34,6 +34,10 @@ pub fn process_take_instruction(accounts: &[AccountView], _data: &[u8]) -> Progr
             return Err(ProgramError::InvalidAccountData);
         }
 
+        if taker_ata_a_state.owner() != taker.address() {
+            return Err(ProgramError::IllegalOwner);
+        }
+
         let amount_to_receive = escrow_state.amount_to_receive();
         let amount_to_give = escrow_state.amount_to_give();
         let bump = escrow_state.bump;

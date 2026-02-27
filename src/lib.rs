@@ -1,13 +1,12 @@
 #![allow(unexpected_cfgs)]
 use pinocchio::{
-    AccountView, Address, ProgramResult, address::declare_id, entrypoint, error::ProgramError,
+    address::declare_id, entrypoint, error::ProgramError, AccountView, Address, ProgramResult,
 };
 
 use crate::instructions::EscrowInstrctions;
 
 pub mod instructions;
 pub mod state;
-pub mod tests;
 
 entrypoint!(process_instruction);
 
@@ -27,7 +26,7 @@ pub fn process_instruction(
     match EscrowInstrctions::try_from(descriminator)? {
         EscrowInstrctions::Make => instructions::make::process_make_instruction(accounts, data)?,
         EscrowInstrctions::Take => instructions::take::process_take_instruction(accounts, data)?,
-        _ => return Err(ProgramError::InvalidInstructionData),
+        EscrowInstrctions::Refund => instructions::refund::process_refund_instruction(accounts, data)?
     };
     Ok(())
 }

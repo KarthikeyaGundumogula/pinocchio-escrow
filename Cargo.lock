@@ -921,22 +921,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "877a4ace8713b0bcf2a4e7eec82529c029f1d0619886d18145fea96c3ffe5c0f"
 
 [[package]]
-name = "escrow"
-version = "0.1.0"
-dependencies = [
- "litesvm",
- "litesvm-token",
- "pinocchio 0.10.2",
- "pinocchio-associated-token-account",
- "pinocchio-log",
- "pinocchio-pubkey",
- "pinocchio-system",
- "pinocchio-token",
- "solana-sdk",
- "spl-associated-token-account",
-]
-
-[[package]]
 name = "feature-probe"
 version = "0.1.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1296,9 +1280,9 @@ dependencies = [
 
 [[package]]
 name = "litesvm"
-version = "0.9.1"
+version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8c835e9bf4590c115245fe15f15025527f88738f96b1993b16cc6f1d572c4979"
+checksum = "6a6d4edace08253a908d301768f291a7115e8e19e13473dd6e1ace78d6366433"
 dependencies = [
  "agave-feature-set",
  "agave-reserved-account-keys",
@@ -1321,7 +1305,7 @@ dependencies = [
  "solana-epoch-schedule",
  "solana-fee",
  "solana-fee-structure",
- "solana-hash 4.2.0",
+ "solana-hash 3.1.0",
  "solana-instruction",
  "solana-instructions-sysvar",
  "solana-keypair",
@@ -1347,7 +1331,7 @@ dependencies = [
  "solana-svm-log-collector",
  "solana-svm-timings",
  "solana-svm-transaction",
- "solana-system-interface 3.0.0",
+ "solana-system-interface",
  "solana-system-program",
  "solana-sysvar",
  "solana-sysvar-id",
@@ -1359,9 +1343,9 @@ dependencies = [
 
 [[package]]
 name = "litesvm-token"
-version = "0.9.1"
+version = "0.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "fc6dd44f9d2839209ba227d03cba0f45616f639d029ab6f238cb75b4e9ab46be"
+checksum = "2f319bae54889c96cef85253ea2374310998294d1dbd1d40c3b9e117a273d3c1"
 dependencies = [
  "litesvm",
  "smallvec",
@@ -1372,7 +1356,7 @@ dependencies = [
  "solana-program-pack",
  "solana-rent",
  "solana-signer",
- "solana-system-interface 3.0.0",
+ "solana-system-interface",
  "solana-transaction",
  "solana-transaction-error",
  "spl-associated-token-account-interface",
@@ -1639,6 +1623,22 @@ dependencies = [
  "solana-address 2.2.0",
  "solana-instruction-view",
  "solana-program-error",
+]
+
+[[package]]
+name = "pinocchio-escrow"
+version = "0.1.0"
+dependencies = [
+ "litesvm",
+ "litesvm-token",
+ "pinocchio 0.10.2",
+ "pinocchio-associated-token-account",
+ "pinocchio-log",
+ "pinocchio-pubkey",
+ "pinocchio-system",
+ "pinocchio-token",
+ "solana-sdk",
+ "spl-associated-token-account",
 ]
 
 [[package]]
@@ -2313,7 +2313,7 @@ dependencies = [
  "solana-svm-log-collector",
  "solana-svm-measure",
  "solana-svm-type-overrides",
- "solana-system-interface 2.0.0",
+ "solana-system-interface",
  "solana-transaction-context",
 ]
 
@@ -2551,7 +2551,7 @@ dependencies = [
  "solana-nonce",
  "solana-pubkey 3.0.0",
  "solana-sdk-ids",
- "solana-system-interface 2.0.0",
+ "solana-system-interface",
  "thiserror 2.0.18",
 ]
 
@@ -2754,7 +2754,7 @@ dependencies = [
  "solana-instruction",
  "solana-pubkey 3.0.0",
  "solana-sdk-ids",
- "solana-system-interface 2.0.0",
+ "solana-system-interface",
 ]
 
 [[package]]
@@ -3034,7 +3034,7 @@ dependencies = [
  "solana-svm-timings",
  "solana-svm-transaction",
  "solana-svm-type-overrides",
- "solana-system-interface 2.0.0",
+ "solana-system-interface",
  "solana-sysvar",
  "solana-sysvar-id",
  "solana-transaction-context",
@@ -3322,7 +3322,7 @@ dependencies = [
  "solana-instruction",
  "solana-program-error",
  "solana-pubkey 3.0.0",
- "solana-system-interface 2.0.0",
+ "solana-system-interface",
  "solana-sysvar",
  "solana-sysvar-id",
 ]
@@ -3410,21 +3410,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "solana-system-interface"
-version = "3.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "14591d6508042ebefb110305d3ba761615927146a26917ade45dc332d8e1ecde"
-dependencies = [
- "num-traits",
- "serde",
- "serde_derive",
- "solana-address 2.2.0",
- "solana-instruction",
- "solana-msg",
- "solana-program-error",
-]
-
-[[package]]
 name = "solana-system-program"
 version = "3.1.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -3445,7 +3430,7 @@ dependencies = [
  "solana-sdk-ids",
  "solana-svm-log-collector",
  "solana-svm-type-overrides",
- "solana-system-interface 2.0.0",
+ "solana-system-interface",
  "solana-sysvar",
  "solana-transaction-context",
 ]
@@ -3574,7 +3559,7 @@ dependencies = [
  "solana-serde-varint",
  "solana-serialize-utils",
  "solana-short-vec",
- "solana-system-interface 2.0.0",
+ "solana-system-interface",
 ]
 
 [[package]]
@@ -3742,7 +3727,7 @@ dependencies = [
  "solana-pubkey 3.0.0",
  "solana-rent",
  "solana-sdk-ids",
- "solana-system-interface 2.0.0",
+ "solana-system-interface",
  "solana-sysvar",
  "spl-associated-token-account-interface",
  "spl-token-2022-interface",
